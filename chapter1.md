@@ -1,4 +1,3 @@
-# Virtual Machines Setup {#virtual-machines-setup}
+# Simple Computer Simulator {#simple-computer-simulator}
 
-Please follow the step to setup a Virtual Machine environment for your Linux experience!
-
+In this section, we will cover the organization of our simple computer and how to simulate its memory and CPU in C.
