@@ -7,7 +7,7 @@ After we get 4 parts of one instruction, we now need to combine them into one fi
 uint32_t inst_code = (opcode << 24) | (sreg << 16) | (dreg << 8) | (immoff & 0x000000ff);
 ```
 
-We use opcode=5, sreg=1, dreg=1 and immoff=-2 as an example to illustrate. The binary representation of **opcode** is of 8 bits:**00000101**, **sreg** and **dreg** is **00000001**. For **immoff**, we following the 2' complement representation therefore it is **11111110**. 
+We use opcode=5, sreg=1, dreg=1 and immoff=-2 as an example to illustrate. The binary representation of **opcode** is of 8 bits:**00000101**, **sreg** and **dreg** is **00000001**. For **immoff**, we following the "2' complement" representation therefore it is **11111110**. 
 
 The result of (opcode << 24) | (sreg << 16) | (dreg << 8) is 0x05010100 as expected. But we **cannot** directly do 0x05010100 | immoff directly, the reason is that for the "|" operation, the data type on its left is integer (because 24, 16, 8 are integers by default which makes result of "<<" an integer). If we directly "|" them together, **immoff will be upcast into an integer first whose representaion will be 0xfffffffe**. When we "|" 0xfffffffe with 0x05010100, the result will be 0xfffffffe. To avoid this senerio, we do **(immoff & 0x000000ff)** to only retrieve the last 8 bits of immoff. Then we can get the expected result: 0x050101fe.
 
